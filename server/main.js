@@ -2,12 +2,10 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-
-var messages = [{
-  id: 1,
-  text: "Hola soy un mensaje",
-  author: "Carlos Azaustre"
-}];
+var env = (process.env.NODE_ENV || "local").toLowerCase();
+var cnf = require('./config')[env];
+var bIsLocal = (process.env.NODE_ENV=='local');
+var messages = [{id: 1, text: "primer mensaje", author: "JRodriguez"}];
 
 app.use(express.static('public'));
 
@@ -21,14 +19,13 @@ io.on('connection', function(socket) {
 
   socket.on('new-message', function(data) {
     messages.push(data);
-
     io.sockets.emit('messages', messages);
   });
 });
 
-const port = process.env.PORT || 8080;
+const port = bIsLocal ? cnf.port : (process.env.PORT || 8080);
 
 server.listen(port, function() {
-  console.log("Servidor corriendo en http://0.0.0.0:"+port);
+  console.log("Servidor corriendo en " + cnf.host + ":"+port);
   //console.log("process.env.NODE_ENV: "+process.env.NODE_ENV);
 });
