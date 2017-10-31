@@ -4,7 +4,7 @@
 module.exports = {
 	"local": {
 		host: "http://192.168.10.17",
-		port: 8787
+		port: 8686
 	},
 	"production": {
 		host: "https://socket-menu.herokuapp.com",
