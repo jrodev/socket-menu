@@ -27,5 +27,5 @@ io.on('connection', function(socket) {
 });
 
 server.listen(8787, function() {
-  console.log("Servidor corriendo en http://localhost:8080");
+  console.log("Servidor corriendo en http://0.0.0.0:8787");
 });
