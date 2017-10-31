@@ -30,4 +30,5 @@ const port = process.env.PORT || 8080;
 
 server.listen(port, function() {
   console.log("Servidor corriendo en http://0.0.0.0:"+port);
+  console.log("process.env.NODE_ENV:"+process.env.NODE_ENV);
 });
