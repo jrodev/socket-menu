@@ -1,4 +1,4 @@
-var socket = io.connect('https://socket-menu.herokuapp.com', { 'forceNew': true });
+var socket = io.connect('http://192.168.10.17:8686', { 'forceNew': true });
 
 socket.on('messages', function(data) {
   console.log(data);

@@ -5,7 +5,7 @@ var io = require('socket.io')(server);
 var env = (process.env.NODE_ENV || "local").toLowerCase();
 var cnf = require('./config')[env];
 var bIsLocal = (process.env.NODE_ENV=='local');
-var messages = [{id: 1, text: "primer mensaje", author: "JRodriguez"}];
+var aMsgPlatos = [];
 
 app.use(express.static('public'));
 
@@ -13,13 +13,27 @@ app.get('/node_env', function(req, res) {
   res.status(200).send("process.env.NODE_ENV: "+process.env.NODE_ENV);
 });
 
+app.get('/cocina/limpiar-cola', function(req, res) {
+  aMsgPlatos = [];
+  res.status(200).send("Cola de platos: "+aMsgPlatos.length);
+});
+
 io.on('connection', function(socket) {
   console.log('Alguien se ha conectado con Sockets');
-  socket.emit('messages', messages);
+  socket.emit('listarplatos', aMsgPlatos);
 
-  socket.on('new-message', function(data) {
-    messages.push(data);
-    io.sockets.emit('messages', messages);
+  socket.on('nuevoplato', function(oMsgPlato) {
+    aMsgPlatos.push(oMsgPlato);
+    io.sockets.emit('colaplatos', {platos:aMsgPlatos, lastPlato:oMsgPlato});
+  });
+  
+  socket.on('servirplato', function(oPlatoState) {
+	for(var i in aMsgPlatos){ 
+		if(aMsgPlatos[i].cod == oPlatoState.cod){
+			aMsgPlatos[i].estado = oPlatoState.estado;
+			break;
+		}
+	}
   });
 });
 
