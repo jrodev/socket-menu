@@ -11,8 +11,8 @@ var messages = [{
 
 app.use(express.static('public'));
 
-app.get('/hello', function(req, res) {
-  res.status(200).send("Hello World!");
+app.get('/node_env', function(req, res) {
+  res.status(200).send("process.env.NODE_ENV: "+process.env.NODE_ENV);
 });
 
 io.on('connection', function(socket) {
@@ -30,5 +30,5 @@ const port = process.env.PORT || 8080;
 
 server.listen(port, function() {
   console.log("Servidor corriendo en http://0.0.0.0:"+port);
-  console.log("process.env.NODE_ENV: "+process.env.NODE_ENV);
+  //console.log("process.env.NODE_ENV: "+process.env.NODE_ENV);
 });
