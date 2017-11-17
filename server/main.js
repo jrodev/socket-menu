@@ -8,6 +8,11 @@ var cnf = require('./config')[env];
 var bIsLocal = (process.env.NODE_ENV == 'local');
 var aMsgPlatos = [];
 
+// 
+var allowedOrigins = cnf.clients;
+//var path ='/stomp'; // you need this if you want to connect to something other than the default socket.io path
+var sio_server = io(server, { origins: allowedOrigins/*, path : path*/});
+
 // estableciendo directorio de elementos estaticos
 app.use(express.static('public'));
 
