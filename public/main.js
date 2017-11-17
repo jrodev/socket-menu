@@ -1,10 +1,12 @@
-var socket = io.connect('http://192.168.10.17:8686', { 'forceNew': true });
+// local url socket http://192.168.10.17:8686
+var socket = io.connect('https://socket-menu.herokuapp.com', { 'forceNew': true });
 
 socket.on('messages', function(data) {
   console.log(data);
   render(data);
 })
 
+// Mostrando mesajes de comunicacion
 function render (data) {
   var html = data.map(function(elem, index) {
     return(`<div>
@@ -16,6 +18,7 @@ function render (data) {
   document.getElementById('messages').innerHTML = html;
 }
 
+// Adicionando nuevo mensaje
 function addMessage(e) {
   var message = {
     author: document.getElementById('username').value,
